@@ -1,0 +1,19 @@
+#+title:   Digitum
+#+startup: content
+
+ZMK firmware for Glove80 powered by [[https://github.com/lilyinstarlight/zmk-nix][zmk-nix]].
+
+* Just tasks
+#+begin_src sh :results output verbatim
+just --list
+#+end_src
+
+#+results:
+: Available recipes:
+:     [deploy]
+:     build  # Build firmware
+:     flash  # Copy `uf2` firmware files to controllers
+:
+:     [dev]
+:     fmt    # Format project files
+:     update # Update West dependencies and bump `zephyrDepsHash`

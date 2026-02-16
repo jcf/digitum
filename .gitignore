@@ -1,0 +1,7 @@
+/.devenv.flake.nix
+/.west
+/build
+/modules
+/result
+/zephyr
+/zmk
