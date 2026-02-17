@@ -4,47 +4,50 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Digitum is a ZMK firmware configuration for the Glove80 split ergonomic keyboard, built using [zmk-nix](https://github.com/lilyinstarlight/zmk-nix) for reproducible builds via Nix flakes.
+Digitum is a ZMK firmware for the Glove80 split keyboard featuring:
+- **Engrammer** layout (Arno's Engram for programmers)
+- **Home row mods** with per-finger timing and bilateral enforcement
+- **Combos** for common shortcuts
+- Built with [zmk-nix](https://github.com/lilyinstarlight/zmk-nix) using MoErgo's ZMK fork for RGB_STATUS
 
 ## Commands
 
 ```sh
-just build    # Build firmware (produces .uf2 files)
+just build    # Build firmware (produces result/zmk_lh.uf2 and zmk_rh.uf2)
 just flash    # Copy firmware to connected controllers
-just update   # Update West dependencies and bump zephyrDepsHash
-just fmt      # Format all project files with treefmt
+just fmt      # Format all project files
 ```
 
 ## Architecture
 
-The firmware build is defined entirely in `flake.nix` using `zmk-nix.legacyPackages.buildSplitKeyboard`. Key configuration:
+### Build System
+- `flake.nix` - Nix flake using `zmk-nix.buildSplitKeyboard`
+- `config/west.yml` - West manifest pinning MoErgo's ZMK fork
+- Board: `glove80_%PART%` with parts `["lh" "rh"]`
 
-- **Board**: `glove80_%PART%` with parts `["lh" "rh"]` (Glove80 is an integrated board, not a shield)
-- **ZMK fork**: Uses MoErgo's fork (`moergo-sc/zmk`) for `RGB_STATUS` support
-- **Dependencies hash**: `zephyrDepsHash` in flake.nix must be updated when West dependencies change
+### Keymap Structure (`config/glove80.keymap`)
+The keymap is organized with all configuration at the top for easy customization:
 
-### Key Files
+1. **Modifier combinations** - HYPER, MEH definitions
+2. **Layer indices** - BASE, NAV, SYM, MAGIC
+3. **Home row mods** - Per-finger modifier assignments
+4. **Top row mods** - Above home row modifier assignments
+5. **Thumb clusters** - Key and layer assignments
+6. **Timing constants** - TAPPING_TERM, per-finger times, COMBO_TIMEOUT
+7. **Key position indices** - For combos and positional hold-tap
 
-- `config/glove80.keymap` - Keymap definition using ZMK devicetree syntax
-- `config/glove80.conf` - Keyboard configuration options
-- `config/west.yml` - West manifest pinning ZMK and Zephyr versions
-
-### Keymap Layers
-
-The keymap defines four layers:
-- `DEFAULT` (0) - Standard QWERTY with magic key for layer access
-- `LOWER` (1) - Media controls, numpad, navigation
-- `MAGIC` (2) - Bluetooth profiles, RGB controls, bootloader
-- `FACTORY_TEST` (3) - Hardware testing
-
-The `layer_td` tap-dance behavior allows single tap for momentary layer or double tap for toggle.
+### Key Behaviors
+- `hml_i/m/r`, `hmr_i/m/r` - Per-finger home row mods (index/middle/ring)
+- `ltl`, `ltr` - Layer-tap for thumb keys
+- `parang_left/right` - Mod-morph for `()`/`<>` with shift
+- `caps_word` - Auto-disabling caps lock
 
 ## Updating Dependencies
 
 When updating ZMK or Zephyr versions:
 1. Edit `config/west.yml` with new revisions
 2. Set `zephyrDepsHash` to a dummy value (e.g., `"sha256-AAAA..."`)
-3. Run `just build` - the error will show the correct hash
+3. Run `just build` - the error shows the correct hash
 4. Update `flake.nix` with the correct hash
 
-Note: `just update` modifies `west.yml` and may clear revision values when using non-upstream forks. Prefer manual hash updates when using MoErgo's fork.
+Note: `just update` may clear revision values when using non-upstream forks.
