@@ -89,20 +89,20 @@ just build
 
 ** Enter Bootloader Mode
 For each half:
+
 1. Switch off power
 2. Connect USB cable
 3. Hold two keys while switching power on:
    - The key directly above your middle finger's home position
    - The bottom outer corner key of the main key area
 
-[[file:doc/bootloader-power-up-method.png]]
+[[./doc/bootloader-power-up-method.png]]
 
 A slow pulsing red LED (near power switch) confirms bootloader mode.
 
 ** Copy Firmware
 #+begin_src sh
-cp result/glove80_lh.uf2 /Volumes/GLV80LHBOOT/
-cp result/glove80_rh.uf2 /Volumes/GLV80RHBOOT/
+just flash
 #+end_src
 
 The volume unmounts automatically when complete.
