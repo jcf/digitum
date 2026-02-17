@@ -1,9 +1,65 @@
 #+title:   Digitum
 #+startup: content
 
-ZMK firmware for Glove80 powered by [[https://github.com/lilyinstarlight/zmk-nix][zmk-nix]].
+ZMK firmware for Glove80 with [[https://github.com/sunaku/engrammer][Engrammer]] layout, powered by [[https://github.com/lilyinstarlight/zmk-nix][zmk-nix]].
 
-* Just tasks
+* Features
+
+** Engrammer Layout
+Arno's Engram optimized for programmers. Vowels clustered on left hand, punctuation in center columns.
+#+begin_example
+b y o u  '  ;  l d w v z
+c i e a  ,  .  h t s n q
+g x j k  -  /  r m f p
+#+end_example
+
+** Home Row Mods
+Hold home row keys for modifiers, tap for letters. Bilateral enforcement prevents same-hand misfires.
+| Finger | Left | Right |
+|--------+------+-------|
+| Index  | Ctrl | Ctrl  |
+| Middle | Shft | Shft  |
+| Ring   | Alt  | Alt   |
+| Pinky  | —    | —     |
+
+** Per-Finger Timing
+Slower fingers get more time to avoid accidental activations (inspired by [[https://github.com/sunaku/glove80-keymaps][sunaku]]).
+| Finger | Time  |
+|--------+-------|
+| Index  | 180ms |
+| Middle | 210ms |
+| Ring   | 240ms |
+| Pinky  | 270ms |
+
+** Top Row Mods
+Hold for modifiers above home row: Command (pinky), Ctrl+Alt (ring), Shift+Alt (middle).
+
+** Thumb Clusters
+#+begin_example
+Upper:  ESC    UP    DOWN  |  LEFT   RIGHT   ESC
+Lower:  SPACE  BSPC  NAV   |  SYM    TAB     ENTER
+                   (hold)    (hold)
+#+end_example
+
+** Combos
+Press keys together for shortcuts:
+| Keys  | Action               |
+|-------+----------------------|
+| A + H | Cmd+Tab (app switch) |
+| E + T | Cmd+` (window switch)|
+| I + S | HYPER (all mods)     |
+| A + E | Escape               |
+| H + T | Enter                |
+| Y + O | Cmd+Space (Spotlight)|
+| D + W | Hyper+Space (Raycast)|
+| B + Y | ( or < with shift    |
+| V + W | ) or > with shift    |
+
+** Special Keys
+- *CapsWord* (left home row outer): Types in CAPS until space/punctuation
+- *Parang*: Combo for =()= or =<>= with shift
+
+* Tasks
 #+begin_src sh :results output verbatim
 just --list
 #+end_src
@@ -17,3 +73,11 @@ just --list
 :     [dev]
 :     fmt    # Format project files
 :     update # Update West dependencies and bump `zephyrDepsHash`
+
+* Customization
+All settings are in =config/glove80.keymap= header:
+- =TAPPING_TERM=: Base timing (increase if accidental holds)
+- =HRM_*=: Home row mod assignments
+- =TOP_*=: Top row mod assignments
+- =THUMB_*=: Thumb cluster keys
+- =COMBO_TIMEOUT=: Combo press window
