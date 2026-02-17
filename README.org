@@ -80,6 +80,33 @@ just --list
 :     fmt    # Format project files
 :     update # Update West dependencies and bump `zephyrDepsHash`
 
+* Flashing
+
+** Build
+#+begin_src sh
+just build
+#+end_src
+
+** Enter Bootloader Mode
+For each half:
+1. Switch off power
+2. Connect USB cable
+3. Hold two keys while switching power on:
+   - The key directly above your middle finger's home position
+   - The bottom outer corner key of the main key area
+
+[[file:doc/bootloader-power-up-method.png]]
+
+A slow pulsing red LED (near power switch) confirms bootloader mode.
+
+** Copy Firmware
+#+begin_src sh
+cp result/glove80_lh.uf2 /Volumes/GLV80LHBOOT/
+cp result/glove80_rh.uf2 /Volumes/GLV80RHBOOT/
+#+end_src
+
+The volume unmounts automatically when complete.
+
 * Customization
 All settings are in =config/glove80.keymap= header:
 - =TAPPING_TERM=: Base timing (increase if accidental holds)
