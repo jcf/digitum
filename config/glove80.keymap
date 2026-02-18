@@ -4,13 +4,33 @@
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
-#include <dt-bindings/zmk/mouse.h>
 
 // =============================================================================
 // MOUSE KEY CONFIGURATION
+// Requires ZMK with mouse key support (PR23 beta firmware)
 // =============================================================================
-#define ZMK_MOUSE_DEFAULT_MOVE_VAL 600
-#define ZMK_MOUSE_DEFAULT_SCRL_VAL 10
+#if __has_include(<dt-bindings/zmk/mouse.h>)
+  #include <dt-bindings/zmk/mouse.h>
+  #define ZMK_MOUSE_DEFAULT_MOVE_VAL 600
+  #define ZMK_MOUSE_DEFAULT_SCRL_VAL 10
+  #define HAS_MOUSE_KEYS 1
+#else
+  #define mkp none
+  #define mmv none
+  #define msc none
+  #define LCLK
+  #define MCLK
+  #define RCLK
+  #define MOVE_UP
+  #define MOVE_DOWN
+  #define MOVE_LEFT
+  #define MOVE_RIGHT
+  #define SCRL_UP
+  #define SCRL_DOWN
+  #define SCRL_LEFT
+  #define SCRL_RIGHT
+  #define HAS_MOUSE_KEYS 0
+#endif
 
 // =============================================================================
 // MODIFIER COMBINATIONS - Swap these to change modifier chords
