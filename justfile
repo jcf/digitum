@@ -9,6 +9,12 @@ _default:
 fmt:
     treefmt
 
+# Generate keymap visualization
+[group('dev')]
+draw:
+    keymap parse -c 10 -z config/glove80.keymap | keymap draw - > doc/keymap.svg
+    @echo "{{ BOLD }}{{ BLUE }}==>{{ NORMAL }} {{ BOLD }}Generated doc/keymap.svg.{{ NORMAL }}"
+
 # Update West dependencies and bump `zephyrDepsHash`
 [group('dev')]
 update:

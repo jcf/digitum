@@ -4,6 +4,7 @@
   packages = with pkgs; [
     # Development
     just
+    keymap-drawer
 
     # Formatters
     alejandra
