@@ -4,6 +4,13 @@
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/mouse.h>
+
+// =============================================================================
+// MOUSE KEY CONFIGURATION
+// =============================================================================
+#define ZMK_MOUSE_DEFAULT_MOVE_VAL 600
+#define ZMK_MOUSE_DEFAULT_SCRL_VAL 10
 
 // =============================================================================
 // MODIFIER COMBINATIONS - Swap these to change modifier chords
@@ -12,19 +19,38 @@
 #define MEH LC(LS(LALT))        // Ctrl+Shift+Alt (no GUI)
 
 // =============================================================================
+// MACOS SHORTCUTS
+// =============================================================================
+#define _UNDO   LG(Z)
+#define _REDO   LG(LS(Z))
+#define _CUT    LG(X)
+#define _COPY   LG(C)
+#define _PASTE  LG(V)
+#define _SELALL LG(A)
+
+// =============================================================================
 // LAYERS - Reorder by changing numbers
 // =============================================================================
 #define BASE 0
-#define NAV 1
-#define SYM 2
-#define MAGIC 3
+#define CURSOR 1    // hold SPACE - navigation on right hand
+#define NUMBER 2    // hold BSPC - numpad on right hand
+#define FUNCTION 3  // hold ESC - F-keys, media
+#define SYMBOL 4    // hold RETURN - symbols on left hand
+#define MOUSE 5     // hold TAB - mouse keys on right hand
+#define SYSTEM 6    // hold SYSTEM - RGB, power
+#define LOWER 7     // layer access
+#define MAGIC 8     // BT, bootloader
+
+// Legacy aliases for compatibility
+#define NAV CURSOR
+#define SYM SYMBOL
 
 // =============================================================================
 // HOME ROW MODS - Swap modifiers by finger position
 // Left hand:  pinky -> index (C I E A)
 // Right hand: index -> pinky (H T S N)
 // =============================================================================
-#define HRM_L_PINKY NONE        // C - no mod (protect pinky)
+#define HRM_L_PINKY LGUI        // C - Cmd
 #define HRM_L_RING  LALT        // I
 #define HRM_L_MID   LSHFT       // E
 #define HRM_L_INDEX LCTRL       // A
@@ -32,7 +58,7 @@
 #define HRM_R_INDEX RCTRL       // H
 #define HRM_R_MID   RSHFT       // T
 #define HRM_R_RING  RALT        // S
-#define HRM_R_PINKY NONE        // N - no mod (protect pinky)
+#define HRM_R_PINKY RGUI        // N - Cmd
 
 // =============================================================================
 // TOP ROW MODS - Above home row, hold for modifier
@@ -51,27 +77,31 @@
 #define TOP_R_PINKY NONE        // V - no mod (protect pinky)
 
 // =============================================================================
-// THUMB CLUSTERS - Swap keys and layers here
-// Upper arc (closer to alphas): navigation
-// Lower arc (further out): primary actions
+// THUMB CLUSTERS - Keycaps and layer assignments
+// Left:  ESC UP DOWN    |  Right: LEFT RIGHT SYS
+//        SPC BSP LOWER  |         RAISE TAB RET
 // =============================================================================
-// Upper arc - left to right across both hands
-#define THUMB_UL1 ESC           // Left upper 1
-#define THUMB_UL2 UP            // Left upper 2
-#define THUMB_UL3 DOWN          // Left upper 3
-#define THUMB_UR1 LEFT          // Right upper 1
-#define THUMB_UR2 RIGHT         // Right upper 2
-#define THUMB_UR3 ESC           // Right upper 3
+// Upper arc - tap keys
+#define THUMB_UL1_TAP ESC       // Left upper 1 - tap ESC
+#define THUMB_UL1_HOLD FUNCTION // Left upper 1 - hold Function
+#define THUMB_UL2 UP            // Left upper 2 - plain UP
+#define THUMB_UL3 DOWN          // Left upper 3 - plain DOWN
+#define THUMB_UR1 LEFT          // Right upper 1 - plain LEFT
+#define THUMB_UR2 RIGHT         // Right upper 2 - plain RIGHT
+#define THUMB_UR3_TAP ESC       // Right upper 3 - tap ESC
+#define THUMB_UR3_HOLD SYSTEM   // Right upper 3 - hold System
 
-// Lower arc - left to right across both hands
-#define THUMB_LL1 SPACE         // Left lower 1
-#define THUMB_LL2 BSPC          // Left lower 2
-#define THUMB_LL3_TAP TAB       // Left lower 3 tap (hold = layer)
-#define THUMB_LL3_HOLD NAV      // Left lower 3 hold layer
-#define THUMB_LR1_TAP TAB       // Right lower 1 tap (hold = layer)
-#define THUMB_LR1_HOLD SYM      // Right lower 1 hold layer
-#define THUMB_LR2 TAB           // Right lower 2
-#define THUMB_LR3 RET           // Right lower 3
+// Lower arc - tap keys and layer holds
+#define THUMB_LL1_TAP SPACE     // Left lower 1 - tap SPACE
+#define THUMB_LL1_HOLD CURSOR   // Left lower 1 - hold Cursor
+#define THUMB_LL2_TAP BSPC      // Left lower 2 - tap BSPC
+#define THUMB_LL2_HOLD NUMBER   // Left lower 2 - hold Number
+#define THUMB_LL3 LOWER         // Left lower 3 - Lower layer access
+#define THUMB_LR1 LOWER         // Right lower 1 - Raise (same as Lower)
+#define THUMB_LR2_TAP TAB       // Right lower 2 - tap TAB
+#define THUMB_LR2_HOLD MOUSE    // Right lower 2 - hold Mouse
+#define THUMB_LR3_TAP RET       // Right lower 3 - tap RETURN
+#define THUMB_LR3_HOLD SYMBOL   // Right lower 3 - hold Symbol
 
 // =============================================================================
 // KEY POSITION INDICES - For positional hold-tap and combos
@@ -105,6 +135,23 @@
 #define POS_W 21
 #define POS_V 22
 
+// Thumb cluster positions (for combos)
+// Upper arc positions from sunaku THUMB_KEYS visual
+// Upper arc (inner, closer to alphas): Left 52-54, Right 57,56,55
+#define POS_THUMB_UL1 52   // Left upper 1 (ESC/Fn)
+#define POS_THUMB_UL2 53   // Left upper 2 (UP)
+#define POS_THUMB_UL3 54   // Left upper 3 (DOWN)
+#define POS_THUMB_UR1 55   // Right upper 1 (LEFT)
+#define POS_THUMB_UR2 56   // Right upper 2 (RIGHT)
+#define POS_THUMB_UR3 57   // Right upper 3 (ESC/Sys)
+// Lower arc (outer, further from alphas): Left 69-71, Right 72-74
+#define POS_THUMB_LL1 69   // Left lower 1 (SPACE)
+#define POS_THUMB_LL2 70   // Left lower 2 (BSPC)
+#define POS_THUMB_LL3 71   // Left lower 3 (TAB/Nav)
+#define POS_THUMB_LR1 72   // Right lower 1 (TAB/Sym)
+#define POS_THUMB_LR2 73   // Right lower 2 (TAB)
+#define POS_THUMB_LR3 74   // Right lower 3 (ENTER)
+
 // =============================================================================
 // TIMING - Base resolution and per-finger adjustments
 // Inspired by sunaku's Glorious Engrammer timing research
@@ -119,8 +166,8 @@
 #define RING_TIME   (TAPPING_TERM + 90)   // 240ms
 #define PINKY_TIME  (TAPPING_TERM + 120)  // 270ms - least dexterous
 
-// Thumb timing - slightly longer than index for layer holds
-#define THUMB_TIME  (TAPPING_TERM + 50)   // 200ms
+// Thumb timing - fast for responsive layer switching
+#define THUMB_TIME  TAPPING_TERM          // 150ms
 
 // Streak decay - time after typing before mods can activate
 // Prevents accidental mods during fast typing
@@ -132,7 +179,7 @@
 // =============================================================================
 // COMBO TIMING - Adjust how quickly keys must be pressed together
 // =============================================================================
-#define COMBO_TIMEOUT 50
+#define COMBO_TIMEOUT 100
 
 / {
     behaviors {
@@ -173,6 +220,19 @@
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <RING_TIME>;
+            quick-tap-ms = <QUICK_TAP>;
+            require-prior-idle-ms = <STREAK_DECAY>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <KEYS_R THUMBS>;
+            hold-trigger-on-release;
+        };
+
+        // Left hand - Pinky finger (slowest)
+        hml_p: hml_pinky {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <PINKY_TIME>;
             quick-tap-ms = <QUICK_TAP>;
             require-prior-idle-ms = <STREAK_DECAY>;
             bindings = <&kp>, <&kp>;
@@ -232,6 +292,19 @@
             hold-trigger-on-release;
         };
 
+        // Right hand - Pinky finger (slowest)
+        hmr_p: hmr_pinky {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <PINKY_TIME>;
+            quick-tap-ms = <QUICK_TAP>;
+            require-prior-idle-ms = <STREAK_DECAY>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <KEYS_L THUMBS>;
+            hold-trigger-on-release;
+        };
+
         // Right hand - Generic (for top row, uses ring timing)
         hmr: hmr {
             compatible = "zmk,behavior-hold-tap";
@@ -246,7 +319,8 @@
         };
 
         // =====================================================================
-        // THUMB KEYS - Layer-tap with balanced flavor for quick layer access
+        // THUMB KEYS - Layer-tap for quick layer access
+        // No bilateral enforcement - layers should work with either hand
         // =====================================================================
 
         // Left thumb - layer tap
@@ -257,7 +331,6 @@
             tapping-term-ms = <THUMB_TIME>;
             quick-tap-ms = <QUICK_TAP>;
             bindings = <&mo>, <&kp>;
-            hold-trigger-key-positions = <KEYS_R THUMBS>;
         };
 
         // Right thumb - layer tap
@@ -268,7 +341,6 @@
             tapping-term-ms = <THUMB_TIME>;
             quick-tap-ms = <QUICK_TAP>;
             bindings = <&mo>, <&kp>;
-            hold-trigger-key-positions = <KEYS_L THUMBS>;
         };
 
         // =====================================================================
@@ -308,99 +380,34 @@
     };
 
     // =========================================================================
-    // COMBOS - Press multiple keys together for shortcuts
+    // COMBOS - Thumb-only combos for ergonomics (no lateral finger strain)
     // =========================================================================
     combos {
         compatible = "zmk,combos";
 
         // ---- App Switching ----
-        // A + H (both index fingers) = Cmd+Tab (app switcher)
+        // ESC + SPACE (left thumb vertical chord) = App switcher
+        // Holds Cmd, taps Tab, activates NAV layer for arrow navigation
+        // Release combo to select app
         combo_app_switch {
             timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_A POS_H>;
-            bindings = <&kp LG(TAB)>;
+            key-positions = <POS_THUMB_UL1 POS_THUMB_LL1>;
+            bindings = <&app_switcher>;
         };
 
-        // E + T (both middle fingers) = Cmd+` (window switcher)
-        combo_window_switch {
+        // ---- Quick Launch ----
+        // ESC/Sys + ENTER (right thumb vertical chord) = Launchbar (Meh+L)
+        combo_launchbar {
             timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_E POS_T>;
-            bindings = <&kp LG(GRAVE)>;
+            key-positions = <POS_THUMB_UR3 POS_THUMB_LR3>;
+            bindings = <&launchbar>;
         };
 
-        // ---- HYPER Key ----
-        // I + S (both ring fingers) = HYPER (all modifiers held while combo held)
-        combo_hyper {
+        // TAB + ENTER (right thumb lower) = Screenshot (Cmd+Shift+4)
+        combo_screenshot {
             timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_I POS_S>;
-            bindings = <&kp HYPER>;
-        };
-
-        // ---- Quick Actions ----
-        // A + E (index + middle, left hand) = Escape
-        combo_esc {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_A POS_E>;
-            bindings = <&kp ESC>;
-        };
-
-        // H + T (index + middle, right hand) = Enter
-        combo_enter {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_H POS_T>;
-            bindings = <&kp RET>;
-        };
-
-        // E + I (middle + ring, left hand) = Tab
-        combo_tab {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_E POS_I>;
-            bindings = <&kp TAB>;
-        };
-
-        // T + S (middle + ring, right hand) = Backspace
-        combo_bspc {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_T POS_S>;
-            bindings = <&kp BSPC>;
-        };
-
-        // ---- Clipboard ----
-        // C + A (pinky + index, left) = Cmd+A (select all)
-        combo_select_all {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_C POS_A>;
-            bindings = <&kp LG(A)>;
-        };
-
-        // ---- Spotlight/Alfred/Raycast ----
-        // Y + O (ring + middle, top row left) = Cmd+Space
-        combo_spotlight {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_Y POS_O>;
-            bindings = <&kp LG(SPACE)>;
-        };
-
-        // D + W (middle + ring, top row right) = Hyper+Space (Raycast)
-        combo_raycast {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_D POS_W>;
-            bindings = <&hyper_space>;
-        };
-
-        // ---- Brackets (parang) ----
-        // B + Y (pinky + ring, top row left) = ( or < with shift
-        combo_parang_left {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_B POS_Y>;
-            bindings = <&parang_left>;
-        };
-
-        // V + W (pinky + ring, top row right) = ) or > with shift
-        combo_parang_right {
-            timeout-ms = <COMBO_TIMEOUT>;
-            key-positions = <POS_V POS_W>;
-            bindings = <&parang_right>;
+            key-positions = <POS_THUMB_LR2 POS_THUMB_LR3>;
+            bindings = <&screenshot>;
         };
     };
 
@@ -410,6 +417,38 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(LS(LG(LA(SPACE))))>;
+        };
+
+        // Launchbar: Meh+L (Ctrl+Shift+Alt+L)
+        launchbar: launchbar {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(LS(LA(L)))>;
+        };
+
+        // Screenshot: Cmd+Shift+4
+        screenshot: screenshot {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LS(N4))>;
+        };
+
+        // App switcher: Hold Cmd, tap Tab, activate NAV layer for arrows
+        // Release combo to select app and release Cmd
+        // Inspired by sunaku's mod_tab_chord
+        app_switcher: app_switcher {
+            compatible = "zmk,behavior-macro";
+            wait-ms = <0>;
+            tap-ms = <0>;
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &mo NAV>
+                , <&macro_press &kp LGUI>
+                , <&macro_tap &kp TAB>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp LGUI>
+                , <&macro_release &mo NAV>
+                ;
         };
 
         rgb_ug_status_macro: rgb_ug_status_macro {
@@ -451,48 +490,121 @@
             // https://github.com/sunaku/engrammer
             // ---------------------------------------------------------------------------------------------------------------------------------
             // |  F1   |  F2 |  F3 |  F4  |  F5  |                                                               |  F6   |  F7   |  F8  |   F9  |  F10 |
-            // |  =    |  1  |  2  |  3   |  4   |  5   |                                                 |  6   |   7   |   8   |  9   |   0   |   [  |
-            // |  TAB  |B/Cmd|Y/Hyp|O/Meh |  U   |  '   |                                                 |  ;   |   L   |D/Meh |W/Hyp |V/Cmd  |   Z  |
-            // |  ESC  |  C  |I/Alt|E/Shft|A/Ctrl|  ,   |                                                 |  .   |H/Ctrl|T/Shft|S/Alt |   N   |   Q  |
-            // |   `   |  G  |  X  |  J   |  K   |  -   |  ESC  |  UP   | DOWN  | | LEFT  | RIGHT |  ESC  |  /   |   R   |   M   |  F   |   P   | PGUP |
-            // | MAGIC | HOME| END | LEFT | RIGHT|      | SPACE | BSPC  |NAV/TAB| |SYM/TAB|  TAB  | ENTER |      |  UP   | DOWN  |  ]   |   \   | PGDN |
+            // |  =    |  1  |  2  |  3   |  4   |  5   |                                                 |  6   |   7   |   8   |  9   |   0   |   \  |
+            // |  `    |  B  |  Y  |O/Meh |U/Hyp |  '   |                                                 |  ;   |L/Hyp  |D/Meh  |  W   |   V   |   Z  |
+            // | CAPS  |C/Cmd|I/Alt|E/Shft|A/Ctrl|  ,   |                                                 |  .   |H/Ctrl|T/Shft |S/Alt |N/Cmd  |   Q  |
+            // |   `   |  G  |  X  |  J   |  K   |  -   |  ESC  |  UP   | DOWN  | | LEFT  | RIGHT |  ESC  |  /   |   R   |   M   |  F   |   P   | SHIFT|
+            // | MAGIC | HOME| PGUP| PGDN | END  |      | SPACE | BSPC  |NAV/TAB| |SYM/TAB|  TAB  | ENTER |      |  (/\< |   [   |  ]   |  )/\> | MAGIC|
 
             bindings = <
             &kp F1         &kp F2            &kp F3            &kp F4            &kp F5                                                                                                              &kp F6    &kp F7            &kp F8            &kp F9            &kp F10
-            &kp EQUAL      &kp N1            &kp N2            &kp N3            &kp N4            &kp N5                                                                                    &kp N6  &kp N7    &kp N8            &kp N9            &kp N0            &kp LBKT
-            &kp TAB        &kp B              &kp Y               &hml_m TOP_L_MID O &hml_i TOP_L_INDEX U &kp SQT                                                                               &kp SEMI &hmr_i TOP_R_INDEX L &hmr_m TOP_R_MID D &kp W              &kp V              &kp Z
-            &caps_word     &kp C             &hml_r HRM_L_RING I &hml_m HRM_L_MID E &hml_i HRM_L_INDEX A &kp COMMA                                                                            &kp DOT  &hmr_i HRM_R_INDEX H &hmr_m HRM_R_MID T &hmr_r HRM_R_RING S &kp N             &kp Q
-            &kp GRAVE      &kp G             &kp X             &kp J             &kp K             &kp MINUS &kp THUMB_UL1 &kp THUMB_UL2 &kp THUMB_UL3 &kp THUMB_UR1 &kp THUMB_UR2 &kp THUMB_UR3 &kp FSLH &kp R    &kp M             &kp F             &kp P             &kp PG_UP
-            &magic MAGIC 0 &kp HOME          &kp END           &kp LEFT          &kp RIGHT                   &kp THUMB_LL1 &kp THUMB_LL2 &ltl THUMB_LL3_HOLD THUMB_LL3_TAP &ltr THUMB_LR1_HOLD THUMB_LR1_TAP &kp THUMB_LR2 &kp THUMB_LR3       &kp UP   &kp DOWN          &kp RBKT          &kp BSLH          &kp PG_DN
+            &kp EQUAL      &kp N1            &kp N2            &kp N3            &kp N4            &kp N5                                                                                    &kp N6  &kp N7    &kp N8            &kp N9            &kp N0            &kp BSLH
+            &kp GRAVE      &kp B             &kp Y             &hml_m TOP_L_MID O &hml_i TOP_L_INDEX U &kp SQT                                                                              &kp SEMI &hmr_i TOP_R_INDEX L &hmr_m TOP_R_MID D &kp W              &kp V              &kp Z
+            &caps_word     &hml_p HRM_L_PINKY C &hml_r HRM_L_RING I &hml_m HRM_L_MID E &hml_i HRM_L_INDEX A &kp COMMA                                                                            &kp DOT  &hmr_i HRM_R_INDEX H &hmr_m HRM_R_MID T &hmr_r HRM_R_RING S &hmr_p HRM_R_PINKY N &kp Q
+            &kp GRAVE      &kp G             &kp X             &kp J             &kp K             &kp MINUS &ltl THUMB_UL1_HOLD THUMB_UL1_TAP &kp THUMB_UL2 &kp THUMB_UL3 &kp THUMB_UR1 &kp THUMB_UR2 &ltr THUMB_UR3_HOLD THUMB_UR3_TAP &kp FSLH &kp R    &kp M             &kp F             &kp P             &kp RSHFT
+            &magic MAGIC 0 &kp HOME          &kp PG_UP         &kp PG_DN         &kp END                     &ltl THUMB_LL1_HOLD THUMB_LL1_TAP &ltl THUMB_LL2_HOLD THUMB_LL2_TAP &mo THUMB_LL3 &mo THUMB_LR1 &ltr THUMB_LR2_HOLD THUMB_LR2_TAP &ltr THUMB_LR3_HOLD THUMB_LR3_TAP       &parang_left &kp LBKT       &kp RBKT          &parang_right     &magic MAGIC 0
             >;
         };
 
-        nav_layer {
-            // Navigation and media controls
+        // Layer 1: CURSOR - hold SPACE - navigation on RIGHT hand
+        // Vim-style: arrows on home row (LEFT, UP, DOWN, RIGHT on H, T, S, N positions)
+        // Left hand: editing shortcuts (undo/redo/cut/copy/paste)
+        cursor_layer {
             bindings = <
-            &kp C_BRI_DN   &kp C_BRI_UP   &kp C_PREV     &kp C_NEXT     &kp C_PP                                                                                                      &kp C_MUTE   &kp C_VOL_DN &kp C_VOL_UP &none        &kp PAUSE_BREAK
-            &trans         &none          &none          &none          &none          &none                                                                              &none      &none        &none        &none        &none        &none
-            &trans         &kp LG(LBKT)   &kp LG(RBKT)   &kp LG(UP)     &kp LG(DOWN)   &none                                                                              &kp PG_UP  &kp HOME     &kp UP       &kp END      &none        &none
-            &trans         &kp LGUI       &kp LALT       &kp LSHFT      &kp LCTRL      &none                                                                              &kp PG_DN  &kp LEFT     &kp DOWN     &kp RIGHT    &none        &none
-            &trans         &kp LG(Z)      &kp LG(X)      &kp LG(C)      &kp LG(V)      &none      &trans     &trans     &to BASE   &trans     &trans     &trans            &none      &kp LA(LEFT) &none        &kp LA(RIGHT) &none       &trans
-            &trans         &none          &none          &none          &none                     &trans     &trans     &trans     &trans     &trans     &trans                       &none        &none        &none        &none        &trans
+            &none          &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &none
+            &kp ESC        &kp RET        &kp SPACE      &kp TAB        &kp DEL        &kp INS                                                                            &kp INS    &kp DEL      &kp TAB      &kp SPACE    &kp RET      &kp ESC
+            &none          &sk LSHFT      &kp _REDO      &kp _UNDO      &kp BSPC       &kp _CUT                                                                           &kp _CUT   &kp BSPC     &kp _UNDO    &kp _REDO    &sk RSHFT    &none
+            &none          &kp LGUI       &kp LALT       &kp LSHFT      &kp LCTRL      &kp _COPY                                                                          &kp _COPY  &kp LEFT     &kp UP       &kp DOWN     &kp RIGHT    &none
+            &none          &kp _SELALL    &none          &none          &none          &kp _PASTE &trans     &trans     &to BASE   &none      &none      &none            &kp _PASTE &kp HOME     &kp PG_UP    &kp PG_DN    &kp END      &none
+            &trans         &none          &none          &none          &none                     &trans     &trans     &trans     &kp _SELALL &none     &none                        &none        &none        &none        &none        &trans
             >;
         };
 
-        sym_layer {
-            // Symbols and numbers
+        // Layer 2: NUMBER - hold BSPC - numpad on RIGHT hand
+        // Left hand: hex digits A-F, editing
+        // Right hand: numpad with operators
+        number_layer {
             bindings = <
-            &trans         &trans         &trans         &trans         &trans                                                                                                        &trans       &trans       &trans       &trans       &trans
-            &trans         &none          &none          &none          &none          &none                                                                              &none       &none        &none        &none        &none        &none
-            &trans         &kp EXCL       &kp AT         &kp HASH       &kp DLLR       &kp PRCNT                                                                          &kp CARET  &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &none
-            &trans         &kp N1         &kp N2         &kp N3         &kp N4         &kp N5                                                                             &kp N6     &kp N7       &kp N8       &kp N9       &kp N0       &none
-            &trans         &kp GRAVE      &kp TILDE      &kp MINUS      &kp EQUAL      &kp PLUS   &trans     &trans     &to BASE   &trans     &trans     &trans            &kp UNDER  &kp LBKT     &kp RBKT     &kp BSLH     &kp PIPE     &trans
-            &trans         &none          &none          &none          &none                     &trans     &trans     &trans     &trans     &trans     &trans                       &kp LBRC     &kp RBRC     &none        &none        &trans
+            &none          &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &none
+            &kp ESC        &kp RET        &kp SPACE      &kp TAB        &kp DEL        &kp INS                                                                            &kp TILDE  &kp CARET    &kp HASH     &kp DLLR     &kp EXCL     &kp PIPE
+            &kp A          &sk LSHFT      &kp _REDO      &kp _UNDO      &kp BSPC       &kp D                                                                              &kp LS(G)  &kp N7       &kp N8       &kp N9       &kp COLON    &kp PRCNT
+            &kp B          &kp LGUI       &kp LALT       &kp LSHFT      &kp LCTRL      &kp E                                                                              &kp K      &kp N4       &kp N5       &kp N6       &kp MINUS    &kp PLUS
+            &kp C          &kp _SELALL    &none          &none          &kp X          &kp F      &trans     &trans     &to BASE   &kp LBKT   &kp RBKT   &kp EQUAL        &kp J      &kp N1       &kp N2       &kp N3       &kp FSLH     &kp ASTRK
+            &trans         &none          &none          &none          &kp UNDER                 &trans     &trans     &trans     &kp COMMA  &kp DOT    &kp N0                       &kp LT       &kp LPAR     &kp RPAR     &kp GT       &kp AT
             >;
         };
 
+        // Layer 3: FUNCTION - hold ESC - F-keys, media
+        // Left hand: editing with modifiers
+        // Right hand: F-keys (numpad layout) and media controls
+        function_layer {
+            bindings = <
+            &none          &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &none
+            &kp ESC        &kp RET        &kp SPACE      &kp TAB        &kp DEL        &kp INS                                                                            &kp C_MEDIA_HOME &kp C_PLAY &kp C_PREV &kp C_NEXT   &kp C_STOP   &kp C_EJECT
+            &none          &sk LSHFT      &kp _REDO      &kp _UNDO      &kp BSPC       &none                                                                              &kp K_CALC &kp F7       &kp F8       &kp F9       &kp F10      &kp F13
+            &none          &kp LGUI       &kp LALT       &kp LSHFT      &kp LCTRL      &none                                                                              &kp K_WWW  &kp F4       &kp F5       &kp F6       &kp F11      &kp F14
+            &none          &kp _SELALL    &none          &none          &none          &none      &trans     &trans     &to BASE   &kp C_PREV &kp C_NEXT &kp C_PP         &none      &kp F1       &kp F2       &kp F3       &kp F12      &kp F15
+            &trans         &none          &none          &none          &none                     &trans     &trans     &trans     &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP                &kp C_BRI_MAX &kp C_BRI_UP &kp C_BRI_DN &kp C_BRI_MIN &kp C_BRI_AUTO
+            >;
+        };
+
+        // Layer 4: SYMBOL - hold RETURN - symbols on LEFT hand
+        // Left hand: programming symbols in logical groups
+        // Right hand: modifiers for chording
+        symbol_layer {
+            bindings = <
+            &none          &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &none
+            &none          &kp GRAVE      &kp LPAR       &kp RPAR       &kp SEMI       &kp COMMA                                                                          &none       &none        &none        &none        &none        &none
+            &kp EXCL       &kp LBRC       &kp SQT        &kp DQT        &kp RBRC       &kp QMARK                                                                          &kp SEMI    &kp RCTRL    &kp RSHFT    &kp RALT     &kp RGUI     &none
+            &kp HASH       &kp CARET      &kp EQUAL      &kp UNDER      &kp DLLR       &kp ASTRK                                                                          &kp DOT     &kp BSPC     &kp TAB      &kp SPACE    &kp RET      &none
+            &kp TILDE      &kp LT         &kp PIPE       &kp MINUS      &kp GT         &kp FSLH   &kp BSLH   &kp DOT    &to BASE   &trans     &trans     &trans            &kp FSLH    &kp DEL      &kp LS(TAB)  &none        &none        &none
+            &kp AT         &kp AMPS       &kp LBKT       &kp RBKT       &kp PLUS                  &kp PRCNT  &kp COLON  &trans     &trans     &trans     &trans                        &trans       &trans       &trans       &trans       &none
+            >;
+        };
+
+        // Layer 5: MOUSE - hold TAB - mouse keys on RIGHT hand
+        // Left hand: scroll wheel, modifiers for drag operations
+        // Right hand: mouse movement and clicks
+        mouse_layer {
+            bindings = <
+            &none          &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &none
+            &none          &none          &none          &none          &none          &none                                                                              &none       &none        &none        &none        &none        &none
+            &none          &none          &msc SCRL_LEFT &mmv MOVE_UP   &msc SCRL_RIGHT &none                                                                             &mkp MCLK   &kp RCTRL    &kp RSHFT    &kp RALT     &kp RGUI     &none
+            &none          &kp LGUI       &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &none                                                                             &mkp LCLK   &mmv MOVE_LEFT &mmv MOVE_UP &mmv MOVE_DOWN &mmv MOVE_RIGHT &none
+            &none          &none          &none          &msc SCRL_DOWN &msc SCRL_UP   &none      &mkp MCLK  &trans     &to BASE   &trans     &trans     &trans            &mkp RCLK   &msc SCRL_LEFT &msc SCRL_UP &msc SCRL_DOWN &msc SCRL_RIGHT &none
+            &trans         &none          &none          &none          &none                     &mkp LCLK  &mkp RCLK  &trans     &trans     &trans     &trans                        &none        &none        &none        &none        &none
+            >;
+        };
+
+        // Layer 6: SYSTEM - hold SYSTEM key - RGB, power, locks
+        // Left hand: RGB controls
+        // Right hand: system functions, lock, sleep, power
+        system_layer {
+            bindings = <
+            &none          &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &none
+            &none          &none          &none          &none          &none          &none                                                                              &none       &none        &none        &none        &none        &none
+            &none          &none          &rgb_ug RGB_HUD &rgb_ug RGB_HUI &none         &kp SLCK                                                                          &rgb_ug RGB_SAI &kp RCTRL  &kp RSHFT    &kp RALT     &kp RGUI     &rgb_ug RGB_SAD
+            &rgb_ug RGB_TOG &rgb_ug RGB_EFR &rgb_ug RGB_BRD &rgb_ug RGB_BRI &rgb_ug RGB_EFF &kp CAPS                                                                      &rgb_ug RGB_HUI &kp K_APP  &kp LG(LC(Q)) &kp C_SLEEP &kp C_POWER  &rgb_ug RGB_HUD
+            &none          &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_SAI &rgb_ug RGB_SPI &kp KP_NUM &kp LG(LC(Q)) &kp C_SLEEP &to BASE &trans   &trans     &trans        &rgb_ug RGB_SPI &rgb_ug RGB_TOG &kp PSCRN &kp SLCK   &kp PAUSE_BREAK &rgb_ug RGB_SPD
+            &trans         &none          &none          &none          &none                     &kp PSCRN  &kp K_APP  &trans     &trans     &trans     &trans                        &rgb_ug RGB_EFF &rgb_ug RGB_BRI &rgb_ug RGB_BRD &rgb_ug RGB_EFR &none
+            >;
+        };
+
+        // Layer 7: LOWER - layer access, toggles, sticky mods
+        // Access other layers by toggle or momentary hold
+        lower_layer {
+            bindings = <
+            &none          &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &none
+            &none          &none          &none          &none          &none          &none                                                                              &none       &none        &none        &none        &none        &none
+            &none          &none          &tog CURSOR    &tog NUMBER    &tog FUNCTION  &none                                                                              &none       &tog FUNCTION &tog NUMBER &tog CURSOR  &none        &none
+            &none          &sk LGUI       &sk LALT       &sk LSHFT      &sk LCTRL      &none                                                                              &none       &sk RCTRL    &sk RSHFT    &sk RALT     &sk RGUI     &none
+            &none          &none          &tog SYMBOL    &tog MOUSE     &tog SYSTEM    &none      &trans     &trans     &to BASE   &trans     &trans     &trans            &none       &tog SYSTEM  &tog MOUSE   &tog SYMBOL  &none        &none
+            &trans         &none          &none          &none          &none                     &trans     &trans     &trans     &trans     &trans     &trans                        &none        &none        &none        &none        &trans
+            >;
+        };
+
+        // Layer 8: MAGIC - BT profiles, bootloader
         magic_layer {
-            // Bluetooth, RGB, and system controls
             bindings = <
             &bt BT_CLR     &none          &none          &none          &none                                                                                                         &none        &none        &none        &none        &bt BT_CLR_ALL
             &none          &none          &none          &none          &none          &none                                                                              &none       &none        &none        &none        &none        &none
