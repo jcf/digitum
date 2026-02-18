@@ -27,6 +27,7 @@ update:
 [group('deploy')]
 build:
     nix build '.#firmware'
+    @just draw
 
 # Copy firmware to mounted bootloader volume
 [group('deploy')]
