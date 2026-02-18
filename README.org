@@ -3,6 +3,12 @@
 
 ZMK firmware for Glove80 with [[https://github.com/sunaku/engrammer][Engrammer]] layout, powered by [[https://github.com/lilyinstarlight/zmk-nix][zmk-nix]].
 
+** Acknowledgments
+This keymap draws inspiration from:
+- [[https://github.com/sunaku/glove80-keymaps][sunaku's Glorious Engrammer]] - app switcher behavior, bilateral home row mods, per-finger timing
+- [[https://github.com/manna-harbour/miryoku][Miryoku]] - layer architecture and thumb cluster philosophy
+- [[https://github.com/jcf/glove80-keymaps][jcf/glove80-keymaps]] - previous fork with Engrammer adaptations
+
 * Features
 
 ** Engrammer Layout
@@ -20,7 +26,7 @@ Hold home row keys for modifiers, tap for letters. Bilateral enforcement prevent
 | Index  | Ctrl | Ctrl  |
 | Middle | Shft | Shft  |
 | Ring   | Alt  | Alt   |
-| Pinky  | —    | —     |
+| Pinky  | Cmd  | Cmd   |
 
 ** Per-Finger Timing
 Slower fingers get more time to avoid accidental activations (inspired by [[https://github.com/sunaku/glove80-keymaps][sunaku]]).
@@ -32,38 +38,57 @@ Slower fingers get more time to avoid accidental activations (inspired by [[http
 | Pinky  | 270ms |
 
 ** Top Row Mods
-Hold for modifiers above home row (pinky/ring protected):
-| Finger | Modifier                    |
-|--------+-----------------------------|
-| Index  | Hyper (Ctrl+Shift+Alt+Cmd)  |
-| Middle | Meh (Ctrl+Shift+Alt)        |
-| Ring   | —                           |
-| Pinky  | —                           |
+Hold for Hyper/Meh above home row (pinky/ring protected):
+| Finger | Modifier                   |
+|--------+----------------------------|
+| Index  | Hyper (Ctrl+Shift+Alt+Cmd) |
+| Middle | Meh (Ctrl+Shift+Alt)       |
+| Ring   | —                          |
+| Pinky  | —                          |
+
+** Layers
+| Layer    | Access           | Purpose                      |
+|----------+------------------+------------------------------|
+| Base     | default          | Engrammer with home row mods |
+| Cursor   | hold SPACE       | Navigation, text editing     |
+| Number   | hold BSPC        | Numpad, hex digits           |
+| Function | hold ESC         | F1-F15, media controls       |
+| Symbol   | hold RETURN      | Programming symbols          |
+| Mouse    | hold TAB (right) | Mouse movement, scroll       |
+| System   | hold ESC (right) | RGB controls, power, locks   |
+| Lower    | inner thumbs     | Layer toggles, sticky mods   |
+| Magic    | outer corners    | Bluetooth, bootloader, reset |
 
 ** Thumb Clusters
 #+begin_example
-Upper:  ESC    UP    DOWN  |  LEFT   RIGHT   ESC
-Lower:  SPACE  BSPC  NAV   |  SYM    TAB     ENTER
-                   (hold)    (hold)
+Upper:  ESC/Fn   UP    DOWN  |  LEFT   RIGHT   ESC/Sys
+Lower:  SPC/Cur  BSP/Num  Lower | Lower  TAB/Mouse  RET/Sym
 #+end_example
 
 ** Combos
-Press keys together for shortcuts:
-| Keys  | Action               |
-|-------+----------------------|
-| A + H | Cmd+Tab (app switch) |
-| E + T | Cmd+` (window switch)|
-| I + S | HYPER (all mods)     |
-| A + E | Escape               |
-| H + T | Enter                |
-| Y + O | Cmd+Space (Spotlight)|
-| D + W | Hyper+Space (Raycast)|
-| B + Y | ( or < with shift    |
-| V + W | ) or > with shift    |
+Thumb-only combos (ergonomic, no lateral finger strain):
+| Keys          | Action                   |
+|---------------+--------------------------|
+| ESC + SPC     | Cmd+Tab app switcher     |
+| ESC/Sys + ENT | Launchbar (Meh+L)        |
+| TAB + ENT     | Screenshot (Cmd+Shift+4) |
 
-** Special Keys
-- *CapsWord* (left home row outer): Types in CAPS until space/punctuation
-- *Parang*: Combo for =()= or =<>= with shift
+** App Switcher
+ESC + SPACE (left thumb keys) activates Cmd+Tab with navigation:
+1. Hold the combo to activate
+2. Cmd is held, Tab is tapped (shows app switcher)
+3. Cursor layer activates for arrow key navigation
+4. Release combo to select app and deactivate Cmd
+
+** Mouse Keys
+Full mouse control on Mouse layer (hold TAB on right thumb):
+- Movement: arrows on home row (left, up, down, right)
+- Scrolling: on left hand and bottom row
+- Clicks: left, middle, right on thumb cluster and home row
+
+** Special Behaviors
+- *CapsWord*: Dedicated key (types in CAPS until space/punctuation)
+- *Parang*: Bottom row brackets morph with shift (tap for =()=, shift for =<>=)
 
 * Tasks
 #+begin_src sh :results output verbatim
@@ -77,6 +102,7 @@ just --list
 :     flash  # Copy `uf2` firmware files to controllers
 :
 :     [dev]
+:     draw   # Generate keymap visualization
 :     fmt    # Format project files
 :     update # Update West dependencies and bump `zephyrDepsHash`
 
