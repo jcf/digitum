@@ -124,56 +124,56 @@
 
 // =============================================================================
 // KEY POSITION INDICES - For positional hold-tap and combos
-// Reference: https://github.com/moergo-sc/glove80-zmk-config/blob/main/docs/glove80-key-positions.png
+// Run `just keypos` to regenerate position defines from SVG
 // =============================================================================
-#define KEYS_L 0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41 52 53 54 55 56 57
-#define KEYS_R 6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 42 43 44 45 46 47 58 59 60 61 62 63
-#define THUMBS 64 65 66 67 68 69 70 71 72 73 74 75
+#define KEYS_L 0 1 2 3 4 10 11 12 13 14 15 22 23 24 25 26 27 34 35 36 37 38 39 46 47 48 49 50 51 52 53 54 64 65 66 67 68 69 70 71
+#define KEYS_R 5 6 7 8 9 16 17 18 19 20 21 28 29 30 31 32 33 40 41 42 43 44 45 55 56 57 58 59 60 61 62 63 72 73 74 75 76 77 78 79
+#define THUMBS 52 53 54 55 56 57 69 70 71 72 73 74
 
-// Home row key positions (for combos)
-// Left:  C=25, I=26, E=27, A=28
-// Right: H=31, T=32, S=33, N=34
-#define POS_C 25
-#define POS_I 26
-#define POS_E 27
-#define POS_A 28
-#define POS_H 31
-#define POS_T 32
-#define POS_S 33
-#define POS_N 34
+// Alpha key positions - generated from doc/keymap.svg
+// Top row (B Y O U | L D W V)
+#define POS_B 23
+#define POS_Y 24
+#define POS_O 25
+#define POS_U 26
+#define POS_L 29
+#define POS_D 30
+#define POS_W 31
+#define POS_V 32
 
-// Top row key positions
-// Left:  B=13, Y=14, O=15, U=16
-// Right: L=19, D=20, W=21, V=22
-#define POS_B 13
-#define POS_Y 14
-#define POS_O 15
-#define POS_U 16
-#define POS_L 19
-#define POS_D 20
-#define POS_W 21
-#define POS_V 22
+// Home row (C I E A | H T S N)
+#define POS_C 35
+#define POS_I 36
+#define POS_E 37
+#define POS_A 38
+#define POS_H 41
+#define POS_T 42
+#define POS_S 43
+#define POS_N 44
 
-// Below home row key positions (index fingers only)
-// Left:  K=40 (index)
-// Right: R=43 (index)
-#define POS_K 40
-#define POS_R 43
+// Below home row (G X J K | R M F P)
+#define POS_G 47
+#define POS_X 48
+#define POS_J 49
+#define POS_K 50
+#define POS_R 59
+#define POS_M 60
+#define POS_F 61
+#define POS_P 62
 
-// Thumb cluster positions (for combos)
-// Upper arc positions from sunaku THUMB_KEYS visual
-// Upper arc (inner, closer to alphas): Left 52-54, Right 57,56,55
+// Thumb cluster positions
+// Upper arc: Left 52-54, Right 55-57
 #define POS_THUMB_UL1 52   // Left upper 1 (ESC/Fn)
 #define POS_THUMB_UL2 53   // Left upper 2 (UP)
 #define POS_THUMB_UL3 54   // Left upper 3 (DOWN)
 #define POS_THUMB_UR1 55   // Right upper 1 (LEFT)
 #define POS_THUMB_UR2 56   // Right upper 2 (RIGHT)
 #define POS_THUMB_UR3 57   // Right upper 3 (ESC/Sys)
-// Lower arc (outer, further from alphas): Left 69-71, Right 72-74
+// Lower arc: Left 69-71, Right 72-74
 #define POS_THUMB_LL1 69   // Left lower 1 (SPACE)
 #define POS_THUMB_LL2 70   // Left lower 2 (BSPC)
-#define POS_THUMB_LL3 71   // Left lower 3 (TAB/Nav)
-#define POS_THUMB_LR1 72   // Right lower 1 (TAB/Sym)
+#define POS_THUMB_LL3 71   // Left lower 3 (LOWER)
+#define POS_THUMB_LR1 72   // Right lower 1 (LOWER)
 #define POS_THUMB_LR2 73   // Right lower 2 (TAB)
 #define POS_THUMB_LR3 74   // Right lower 3 (ENTER)
 
@@ -440,6 +440,15 @@
             timeout-ms = <COMBO_TIMEOUT>;
             key-positions = <POS_THUMB_LL1 POS_THUMB_LL2>;
             bindings = <&homerow>;
+        };
+
+        // ---- Sticky Modifiers ----
+        // K + R (both index fingers below home) = Sticky Cmd
+        // Tap combo, release, then next key gets Cmd applied
+        combo_sticky_cmd {
+            timeout-ms = <COMBO_TIMEOUT>;
+            key-positions = <POS_K POS_R>;
+            bindings = <&sk LGUI>;
         };
     };
 

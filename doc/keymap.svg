@@ -499,6 +499,13 @@ path.combo {
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 521)" class="layer-cursor">
@@ -818,6 +825,13 @@ path.combo {
 <g class="combo combopos-3">
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
 </g>
 </g>
 </g>
@@ -1148,6 +1162,13 @@ path.combo {
 <g class="combo combopos-3">
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
 </g>
 </g>
 </g>
@@ -1486,6 +1507,13 @@ path.combo {
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 2085)" class="layer-symbol">
@@ -1805,6 +1833,13 @@ path.combo {
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 2606)" class="layer-mouse">
@@ -2081,6 +2116,13 @@ path.combo {
 <g class="combo combopos-3">
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
 </g>
 </g>
 </g>
@@ -2445,6 +2487,13 @@ path.combo {
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 3649)" class="layer-lower">
@@ -2773,6 +2822,13 @@ path.combo {
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 4170)" class="layer-magic">
@@ -3080,6 +3136,13 @@ path.combo {
 <g class="combo combopos-3">
 <rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
 <text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
+<g class="combo combopos-4">
+<path d="M504,252 l-233,0" class="combo"/>
+<path d="M504,252 l233,0" class="combo"/>
+<rect rx="6" ry="6" x="490" y="239" width="28" height="26" class="combo"/>
+<text x="504" y="252" class="combo tap">LGUI</text>
+<text x="504" y="263" class="combo hold">sticky</text>
 </g>
 </g>
 </g>
