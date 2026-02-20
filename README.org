@@ -21,12 +21,18 @@ g x j k  -  /  r m f p
 
 ** Home Row Mods
 Hold home row keys for modifiers, tap for letters. Bilateral enforcement prevents same-hand misfires.
-| Finger | Left | Right |
-|--------+------+-------|
-| Index  | Ctrl | Ctrl  |
-| Middle | Shft | Shft  |
-| Ring   | Alt  | Alt   |
-| Pinky  | Cmd  | Cmd   |
+| Finger | Left (key) | Right (key) | Modifier |
+|--------+------------+-------------+----------|
+| Index  | A          | H           | Ctrl     |
+| Middle | E          | T           | Shift    |
+| Ring   | I          | S           | Alt      |
+| Pinky  | C          | N           | Cmd      |
+
+** Below Home Row Mods
+Cmd on index fingers (below home row) for reduced pinky strain:
+| Left (key) | Right (key) | Modifier |
+|------------+-------------+----------|
+| K          | R           | Cmd      |
 
 ** Per-Finger Timing
 Slower fingers get more time to avoid accidental activations (inspired by [[https://github.com/sunaku/glove80-keymaps][sunaku]]).

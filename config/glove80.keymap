@@ -155,6 +155,12 @@
 #define POS_W 21
 #define POS_V 22
 
+// Below home row key positions (index fingers only)
+// Left:  K=40 (index)
+// Right: R=43 (index)
+#define POS_K 40
+#define POS_R 43
+
 // Thumb cluster positions (for combos)
 // Upper arc positions from sunaku THUMB_KEYS visual
 // Upper arc (inner, closer to alphas): Left 52-54, Right 57,56,55
@@ -535,7 +541,7 @@
             &kp EQUAL      &kp N1            &kp N2            &kp N3            &kp N4            &kp N5                                                                                    &kp N6  &kp N7    &kp N8            &kp N9            &kp N0            &kp BSLH
             &kp GRAVE      &kp B             &kp Y             &hml_m TOP_L_MID O &hml_i TOP_L_INDEX U &kp SQT                                                                              &kp SEMI &hmr_i TOP_R_INDEX L &hmr_m TOP_R_MID D &kp W              &kp V              &kp Z
             &caps_word     &hml_p HRM_L_PINKY C &hml_r HRM_L_RING I &hml_m HRM_L_MID E &hml_i HRM_L_INDEX A &kp COMMA                                                                            &kp DOT  &hmr_i HRM_R_INDEX H &hmr_m HRM_R_MID T &hmr_r HRM_R_RING S &hmr_p HRM_R_PINKY N &kp Q
-            &kp GRAVE      &kp G             &kp X             &kp J             &kp K             &kp MINUS &ltl THUMB_UL1_HOLD THUMB_UL1_TAP &kp THUMB_UL2 &kp THUMB_UL3 &kp THUMB_UR1 &kp THUMB_UR2 &ltr THUMB_UR3_HOLD THUMB_UR3_TAP &kp FSLH &kp R    &kp M             &kp F             &kp P             &kp RSHFT
+            &kp GRAVE      &kp G             &kp X             &kp J             &hml_i LGUI K     &kp MINUS &ltl THUMB_UL1_HOLD THUMB_UL1_TAP &kp THUMB_UL2 &kp THUMB_UL3 &kp THUMB_UR1 &kp THUMB_UR2 &ltr THUMB_UR3_HOLD THUMB_UR3_TAP &kp FSLH &hmr_i RGUI R    &kp M             &kp F             &kp P             &kp RSHFT
             &magic MAGIC 0 &kp HOME          &kp PG_UP         &kp PG_DN         &kp END                     &ltl THUMB_LL1_HOLD THUMB_LL1_TAP &ltl THUMB_LL2_HOLD THUMB_LL2_TAP &mo THUMB_LL3 &mo THUMB_LR1 &ltr THUMB_LR2_HOLD THUMB_LR2_TAP &ltr THUMB_LR3_HOLD THUMB_LR3_TAP       &parang_left &kp LBKT       &kp RBKT          &parang_right     &magic MAGIC 0
             >;
         };
