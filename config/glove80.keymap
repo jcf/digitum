@@ -429,6 +429,13 @@
             key-positions = <POS_THUMB_LR2 POS_THUMB_LR3>;
             bindings = <&screenshot>;
         };
+
+        // SPACE + BSPC (left thumb lower) = Home Row (Cmd+Opt+Ctrl+/)
+        combo_homerow {
+            timeout-ms = <COMBO_TIMEOUT>;
+            key-positions = <POS_THUMB_LL1 POS_THUMB_LL2>;
+            bindings = <&homerow>;
+        };
     };
 
     macros {
@@ -451,6 +458,13 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(LS(N4))>;
+        };
+
+        // Home Row: Cmd+Opt+Ctrl+/
+        homerow: homerow {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LA(LC(FSLH)))>;
         };
 
         // App switcher: Hold Cmd, tap Tab, activate NAV layer for arrows

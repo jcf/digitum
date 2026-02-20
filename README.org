@@ -67,11 +67,12 @@ Lower:  SPC/Cur  BSP/Num  Lower | Lower  TAB/Mouse  RET/Sym
 
 ** Combos
 Thumb-only combos (ergonomic, no lateral finger strain):
-| Keys          | Action                   |
-|---------------+--------------------------|
-| ESC + SPC     | Cmd+Tab app switcher     |
-| ESC/Sys + ENT | Launchbar (Meh+L)        |
-| TAB + ENT     | Screenshot (Cmd+Shift+4) |
+| Keys          | Action                    |
+|---------------+---------------------------|
+| ESC + SPC     | Cmd+Tab app switcher      |
+| ESC/Sys + ENT | Launchbar (Meh+L)         |
+| TAB + ENT     | Screenshot (Cmd+Shift+4)  |
+| SPC + BSP     | Home Row (Cmd+Opt+Ctrl+/) |
 
 ** App Switcher
 ESC + SPACE (left thumb keys) activates Cmd+Tab with navigation:

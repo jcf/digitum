@@ -495,6 +495,10 @@ path.combo {
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
 </g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 521)" class="layer-cursor">
@@ -810,6 +814,10 @@ path.combo {
 <g class="combo combopos-2">
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
+</g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
 </g>
 </g>
@@ -1136,6 +1144,10 @@ path.combo {
 <g class="combo combopos-2">
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
+</g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
 </g>
 </g>
@@ -1470,6 +1482,10 @@ path.combo {
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
 </g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 2085)" class="layer-symbol">
@@ -1785,6 +1801,10 @@ path.combo {
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
 </g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 2606)" class="layer-mouse">
@@ -2057,6 +2077,10 @@ path.combo {
 <g class="combo combopos-2">
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
+</g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
 </g>
 </g>
@@ -2417,6 +2441,10 @@ path.combo {
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
 </g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 3649)" class="layer-lower">
@@ -2741,6 +2769,10 @@ path.combo {
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
 </g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 4170)" class="layer-magic">
@@ -3044,6 +3076,10 @@ path.combo {
 <g class="combo combopos-2">
 <rect rx="6" ry="6" x="652" y="350" width="28" height="26" class="combo"/>
 <text x="666" y="363" class="combo tap"><tspan style="font-size: 64%">&amp;screenshot</tspan></text>
+</g>
+<g class="combo combopos-3">
+<rect rx="6" ry="6" x="328" y="350" width="28" height="26" class="combo"/>
+<text x="342" y="363" class="combo tap"><tspan style="font-size: 88%">&amp;homerow</tspan></text>
 </g>
 </g>
 </g>
