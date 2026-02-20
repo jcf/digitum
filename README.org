@@ -3,16 +3,18 @@
 
 ZMK firmware for Glove80 with [[https://github.com/sunaku/engrammer][Engrammer]] layout, powered by [[https://github.com/lilyinstarlight/zmk-nix][zmk-nix]].
 
-** Acknowledgments
+* Acknowledgments
 This keymap draws inspiration from:
+
 - [[https://github.com/sunaku/glove80-keymaps][sunaku's Glorious Engrammer]] - app switcher behavior, bilateral home row mods, per-finger timing
 - [[https://github.com/manna-harbour/miryoku][Miryoku]] - layer architecture and thumb cluster philosophy
 - [[https://github.com/jcf/glove80-keymaps][jcf/glove80-keymaps]] - previous fork with Engrammer adaptations
 
 * Features
-
 ** Engrammer Layout
-Arno's Engram optimized for programmers. Vowels clustered on left hand, punctuation in center columns.
+Arno's Engram optimized for programmers. Vowels clustered on left hand,
+punctuation in center columns.
+
 #+begin_example
 b y o u  '  ;  l d w v z
 c i e a  ,  .  h t s n q
@@ -20,7 +22,9 @@ g x j k  -  /  r m f p
 #+end_example
 
 ** Home Row Mods
-Hold home row keys for modifiers, tap for letters. Bilateral enforcement prevents same-hand misfires.
+Hold home row keys for modifiers, tap for letters. Bilateral enforcement
+prevents same-hand misfires.
+
 | Finger | Left (key) | Right (key) | Modifier |
 |--------+------------+-------------+----------|
 | Index  | A          | H           | Ctrl     |
@@ -31,6 +35,7 @@ Cmd is on index fingers below home row (K and R) to reduce pinky strain.
 
 ** Per-Finger Timing
 Slower fingers get more time to avoid accidental activations (inspired by [[https://github.com/sunaku/glove80-keymaps][sunaku]]).
+
 | Finger | Time  |
 |--------+-------|
 | Index  | 180ms |
@@ -40,6 +45,7 @@ Slower fingers get more time to avoid accidental activations (inspired by [[http
 
 ** Top Row Mods
 Hold for Hyper/Meh above home row (pinky/ring protected):
+
 | Finger | Modifier                   |
 |--------+----------------------------|
 | Index  | Hyper (Ctrl+Shift+Alt+Cmd) |
@@ -67,9 +73,11 @@ Lower:  SPC/Cur  BSP/Num  Lower | Lower  TAB/Mouse  RET/Sym
 #+end_example
 
 ** Combos
-Thumb-only combos (ergonomic, no lateral finger strain):
+Ergonomic combos (no lateral finger strain):
+
 | Keys          | Action                    |
 |---------------+---------------------------|
+| K + R         | Sticky Cmd (one-shot)     |
 | ESC + SPC     | Cmd+Tab app switcher      |
 | ESC/Sys + ENT | Launchbar (Meh+L)         |
 | TAB + ENT     | Screenshot (Cmd+Shift+4)  |
@@ -77,6 +85,7 @@ Thumb-only combos (ergonomic, no lateral finger strain):
 
 ** App Switcher
 ESC + SPACE (left thumb keys) activates Cmd+Tab with navigation:
+
 1. Hold the combo to activate
 2. Cmd is held, Tab is tapped (shows app switcher)
 3. Cursor layer activates for arrow key navigation
@@ -84,6 +93,7 @@ ESC + SPACE (left thumb keys) activates Cmd+Tab with navigation:
 
 ** Mouse Keys
 Full mouse control on Mouse layer (hold TAB on right thumb):
+
 - Movement: arrows on home row (left, up, down, right)
 - Scrolling: on left hand and bottom row
 - Clicks: left, middle, right on thumb cluster and home row
@@ -98,18 +108,20 @@ just --list
 #+end_src
 
 #+results:
-: Available recipes:
-:     [deploy]
-:     build  # Build firmware
-:     flash  # Copy `uf2` firmware files to controllers
-:
-:     [dev]
-:     draw   # Generate keymap visualization
-:     fmt    # Format project files
-:     update # Update West dependencies and bump `zephyrDepsHash`
+#+begin_example
+Available recipes:
+    [deploy]
+    build  # Build firmware
+    flash  # Copy firmware to mounted bootloader volume
+
+    [dev]
+    draw   # Generate keymap visualization
+    fmt    # Format project files
+    keypos # Print key position indices
+    update # Update West dependencies and bump `zephyrDepsHash`
+#+end_example
 
 * Flashing
-
 ** Build
 #+begin_src sh
 just build
@@ -137,6 +149,7 @@ The volume unmounts automatically when complete.
 
 * Customization
 All settings are in =config/glove80.keymap= header:
+
 - =TAPPING_TERM=: Base timing (increase if accidental holds)
 - =HRM_*=: Home row mod assignments
 - =TOP_*=: Top row mod assignments
