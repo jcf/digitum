@@ -1,0 +1,129 @@
+#!/usr/bin/env bb
+;; -*- mode: clojure -*-
+;;
+;; Extract key position indices from keymap SVG.
+;; Generates #define statements for use in ZMK keymaps.
+
+(ns keypos
+  (:require
+   [babashka.fs :as fs]
+   [clojure.string :as str]))
+
+;;; ----------------------------------------------------------------------------
+;;; Configuration
+
+(def svg-path "doc/keymap.svg")
+
+;;; ----------------------------------------------------------------------------
+;;; Parsing
+
+(defn extract-positions
+  "Parse SVG and extract keypos-N -> key label mappings.
+   Only extracts from the first layer (base layer) to avoid duplicates."
+  [svg-content]
+  (let [groups (re-seq #"(?s)<g[^>]*keypos-(\d+)\"[^>]*>.*?</g>" svg-content)
+        extract-label (fn [[group-str pos-str]]
+                        (let [pos (parse-long pos-str)
+                              tap-match (re-find #"class=\"key tap\"[^>]*>([^<]+)<" group-str)]
+                          (when tap-match
+                            [pos (str/trim (second tap-match))])))]
+    (->> groups
+         (map extract-label)
+         (filter some?)
+         (filter (fn [[_ label]]
+                   (and (seq label)
+                        (<= (count label) 6)
+                        (not (str/includes? label "…"))
+                        (not (str/starts-with? label "&")))))
+         ;; Take first occurrence of each position (base layer)
+         (reduce (fn [acc [pos label]]
+                   (if (contains? acc pos)
+                     acc
+                     (assoc acc pos label)))
+                 (sorted-map)))))
+
+(def symbol-names
+  "Map of symbols to their define names."
+  {"="  "EQUAL"
+   "\\" "BSLH"
+   "`"  "GRAVE"
+   "'"  "SQT"
+   "\"" "DQT"
+   ";"  "SEMI"
+   ":"  "COLON"
+   ","  "COMMA"
+   "."  "DOT"
+   "-"  "MINUS"
+   "/"  "FSLH"
+   "["  "LBKT"
+   "]"  "RBKT"
+   "("  "LPAR"
+   ")"  "RPAR"
+   "<"  "LT"
+   ">"  "GT"
+   "@"  "AT"
+   "#"  "HASH"
+   "$"  "DLLR"
+   "%"  "PRCNT"
+   "^"  "CARET"
+   "&"  "AMPS"
+   "*"  "STAR"
+   "+"  "PLUS"
+   "_"  "UNDER"
+   "~"  "TILDE"
+   "|"  "PIPE"
+   "!"  "EXCL"
+   "?"  "QMARK"})
+
+(defn label->define-name
+  "Convert a key label to a valid C identifier for #define."
+  [label pos]
+  (or
+   ;; Check symbol map first
+   (get symbol-names label)
+   ;; Handle compound labels like "Gui+X" -> skip (not useful)
+   (when (str/includes? label "+")
+     nil)
+   ;; Single letter or standard key name
+   (let [cleaned (-> label
+                     str/upper-case
+                     (str/replace #"[^A-Z0-9]+" "_")
+                     (str/replace #"^_+|_+$" ""))]
+     (when (seq cleaned)
+       cleaned))))
+
+(defn generate-defines
+  "Generate #define statements for positions, handling duplicates."
+  [positions]
+  (let [;; Track used names to handle duplicates
+        used-names (atom #{})
+        make-unique (fn [name pos]
+                      (if (contains? @used-names name)
+                        ;; Append position number to make unique
+                        (str name "_" pos)
+                        (do
+                          (swap! used-names conj name)
+                          name)))]
+    (->> positions
+         (keep (fn [[pos label]]
+                 (when-let [base-name (label->define-name label pos)]
+                   (let [name (make-unique base-name pos)]
+                     (format "#define POS_%-12s %2d  // %s" name pos label)))))
+         (str/join "\n"))))
+
+;;; ----------------------------------------------------------------------------
+;;; Entry point
+
+(let [svg-file (fs/file svg-path)]
+  (when-not (fs/exists? svg-file)
+    (binding [*out* *err*]
+      (println "Error: SVG file not found:" svg-path)
+      (println "Run 'just build' first to generate the keymap SVG."))
+    (System/exit 1))
+
+  (let [svg-content (slurp svg-file)
+        positions (extract-positions svg-content)]
+    (println "// Key position defines - generated from" svg-path)
+    (println "// Run `just keypos` to regenerate")
+    (println)
+    (println (generate-defines positions))))

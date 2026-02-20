@@ -3,6 +3,7 @@
 
   packages = with pkgs; [
     # Development
+    babashka
     just
     keymap-drawer
 

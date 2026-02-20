@@ -15,6 +15,11 @@ draw:
     keymap parse -c 10 -z config/glove80.keymap | keymap draw - > doc/keymap.svg
     @echo "{{ BOLD }}{{ BLUE }}==>{{ NORMAL }} {{ BOLD }}Generated doc/keymap.svg.{{ NORMAL }}"
 
+# Print key position indices
+[group('dev')]
+keypos:
+    @bin/keypos
+
 # Update West dependencies and bump `zephyrDepsHash`
 [group('dev')]
 update:
